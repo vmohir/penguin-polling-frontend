@@ -1,3 +1,3 @@
-<p>
-  polls-list works!
-</p>
+<section>
+  <app-poll-item *ngFor="let poll of pollsList; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
+</section>
