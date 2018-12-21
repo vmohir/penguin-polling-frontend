@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PollsService, PollDetails, PollOptions } from '@app/core/polls.service';
+import { PollsService, PollDetails, PollOption } from '@app/core/polls.service';
 
 @Component({
   selector: 'app-poll-single-page',
@@ -19,5 +19,7 @@ export class PollSinglePageComponent implements OnInit {
     this.pollService.getPollDetails(this.pollId).subscribe(data => (this.poll = data));
   }
 
-  trackByFnOptions(index: number, option: PollOptions) {}
+  trackByFnOptions(index: number, option: PollOption) {
+    return index;
+  }
 }
