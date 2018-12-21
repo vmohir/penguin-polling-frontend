@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from './classes/local-storage';
 import { FormControl, Validators } from '@angular/forms';
+import { PollsService } from './core/polls.service';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +16,17 @@ export class AppComponent {
     const username = this.LS.get('username');
     return username && username !== '';
   }
-  constructor() {
+  constructor(private pollService: PollsService) {
     this.initialiseUsername();
   }
   private initialiseUsername() {
-    if (this.hasUsername) this.username.setValue(this.LS.get('username'));
+    if (this.hasUsername) {
+      this.username.setValue(this.LS.get('username'));
+      this.onUsernameSubmit();
+    }
   }
   onUsernameSubmit() {
     this.LS.set('username', this.username.value);
-    console.log('​AppComponent -> onUsernameSubmit -> this.username', this.username, this.LS.get('username'));
+    this.pollService.setUsername(this.username.value);
   }
 }

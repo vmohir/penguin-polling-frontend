@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { PollItemComponent } from './poll-item/poll-item.component';
 import { PollSinglePageComponent } from './poll-single-page/poll-single-page.component';
 import { PollsListComponent } from './polls-list/polls-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, PollsListComponent, PollItemComponent, PollSinglePageComponent],
@@ -19,7 +20,8 @@ import { PollsListComponent } from './polls-list/polls-list.component';
     MatButtonModule,
     MatTooltipModule,
     MatInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
