@@ -1,12 +1,48 @@
-<div>
-  <form [formGroup]="pollForm">
-    <mat-form-field class="w-100">
-      <input matInput type="text" formControlName="title" placeholder="عنوان نظرسنجی">
+<div class="form-container">
+  <form [formGroup]="pollForm" (submit)="submitPollForm()">
+    <h4>عنوان و توضیحات نظرسنجی</h4>
+    <mat-form-field class="w-100 rtl-text">
+      <input matInput type="text" formControlName="title" placeholder="عنوان نظرسنجی. مثلا:‌ چه زمانی می‌توانید در جلسه شرکت کنید">
     </mat-form-field>
 
-    <div formArrayName="options" *ngFor="let o of pollOptions.controls, let i = index">
-      <div [formGroupName]="i">
-      </div>
+    <mat-form-field class="w-100 rtl-text">
+      <textarea class="description-input" matInput formControlName="description" placeholder="توضیحات" rows="5"></textarea>
+    </mat-form-field>
+
+    <h4>گزینه‌های نظرسنجی</h4>
+    <div formArrayName="options">
+      <mat-form-field class="w-100 rtl-text">
+        <mat-chip-list #optionsChipsList>
+          <mat-chip *ngFor="let o of pollOptions.controls, let i = index" [selectable]="true" [removable]="true"
+                    (removed)="removeOption(i)">
+            <span [formGroupName]="i">{{o.value}}</span>
+            <i class="flaticon-005-cancel-1 remove-button mr-2" matChipRemove></i>
+          </mat-chip>
+          <input placeholder="یک گزینه را وارد کنید و Enter را بزنید" [matChipInputFor]="optionsChipsList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addOption($event)">
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+
+    <h4>چه کسانی می‌توانند در این نظرسنجی شرکت کنند؟</h4>
+    <div formArrayName="participants">
+      <mat-form-field class="w-100 ltr">
+        <mat-chip-list #participantsChipsList>
+          <mat-chip *ngFor="let p of pollParticipants.controls, let i = index" [selectable]="true" [removable]="true"
+                    (removed)="removeParticipant(i)">
+            <span [formGroupName]="i">{{p.value}}</span>
+            <i class="flaticon-005-cancel-1 remove-button ml-2" matChipRemove></i>
+          </mat-chip>
+          <input placeholder="ایمیل یک شخص را وارد کنید و Enter را بزنید" [matChipInputFor]="participantsChipsList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addParticipant($event)">
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button mat-flat-button color="primary" type="submit" #submitLoader="loader" loader>ایجاد نظرسنجی</button>
     </div>
   </form>
 </div>

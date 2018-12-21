@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LocalStorageService } from './classes/local-storage';
 import { FormControl, Validators } from '@angular/forms';
 import { PollsService } from './core/polls.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
     const username = this.LS.get('username');
     return username && username !== '';
   }
-  constructor(private pollService: PollsService) {
+  constructor(private pollService: PollsService, private router: Router) {
     this.initialiseUsername();
   }
   private initialiseUsername() {
@@ -28,5 +29,9 @@ export class AppComponent {
   onUsernameSubmit() {
     this.LS.set('username', this.username.value);
     this.pollService.setUsername(this.username.value);
+  }
+
+  onClickCreatePoll() {
+    this.router.navigate(['/new']);
   }
 }

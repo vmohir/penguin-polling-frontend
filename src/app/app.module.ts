@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatTooltipModule, MatFormFieldModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatTooltipModule, MatFormFieldModule, MatChipsModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,7 @@ import { PollSinglePageComponent } from './poll-single-page/poll-single-page.com
 import { PollsListComponent } from './polls-list/polls-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import { LoaderModule } from './directives/loader/loader.module';
 
 @NgModule({
   declarations: [AppComponent, PollsListComponent, PollItemComponent, PollSinglePageComponent, CreatePollComponent],
@@ -22,8 +23,10 @@ import { CreatePollComponent } from './create-poll/create-poll.component';
     MatTooltipModule,
     MatInputModule,
     MatFormFieldModule,
+    MatChipsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,15 @@
 .flaticon-001-next:before {
-  content: '\e001';
+	content: "\e001";
 }
 .flaticon-002-back:before {
-  content: '\e002';
+	content: "\e002";
+}
+.flaticon-003-round-delete-button:before {
+	content: "\e003";
+}
+.flaticon-004-cancel:before {
+	content: "\e004";
+}
+.flaticon-005-cancel-1:before {
+	content: "\e005";
 }

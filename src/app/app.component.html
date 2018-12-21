@@ -1,8 +1,8 @@
 <main class="rtl">
   <div class="container">
-    <section class="username-wrapper">
-      <div class="username-container">
-        <form (submit)="onUsernameSubmit()">
+    <section class="username-wrapper row no-gutters justify-content-center flex-nowrap">
+      <div class="username-container col">
+        <form *ngIf="!hasUsername" (submit)="onUsernameSubmit()">
           <div class="row no-gutters">
             <div class="col">
               <input class="username-input" type="text" [formControl]="username" placeholder="نام کاربری">
@@ -12,6 +12,21 @@
             </div>
           </div>
         </form>
+        <div *ngIf="hasUsername" class="row align-items-center">
+          <div class="col rtl-text">
+            شما با ایمیل
+            <span>{{username.value}}</span>
+            وارد شده‌اید
+          </div>
+
+          <div class="col-auto">
+            <button mat-button color="warn">خروج</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="hasUsername" class="col-auto">
+        <button class="create-poll-button h-100 mr-2" mat-raised-button color="accent" type="button" (click)="onClickCreatePoll()">
+          ایجاد<br>نظرسنجی</button>
       </div>
     </section>
     <ng-container *ngIf="hasUsername">

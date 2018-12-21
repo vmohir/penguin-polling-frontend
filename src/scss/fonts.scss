@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin:400,700');
-$arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08FF;
 @font-face {
   font-family: IRANSans;
   font-style: normal;
@@ -9,7 +7,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
     url('assets/fonts/iransans/woff2/IRANSansWeb_Bold.woff2') format('woff2'),
     url('assets/fonts/iransans/woff/IRANSansWeb_Bold.woff') format('woff'),
     url('assets/fonts/iransans/ttf/IRANSansWeb_Bold.ttf') format('truetype');
-  unicode-range: $arabic-persian-unicode-range;
 }
 
 @font-face {
@@ -21,7 +18,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
     url('assets/fonts/iransans/woff2/IRANSansWeb_Medium.woff2') format('woff2'),
     url('assets/fonts/iransans/woff/IRANSansWeb_Medium.woff') format('woff'),
     url('assets/fonts/iransans/ttf/IRANSansWeb_Medium.ttf') format('truetype');
-  unicode-range: $arabic-persian-unicode-range;
 }
 
 @font-face {
@@ -33,7 +29,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
     url('assets/fonts/iransans/woff2/IRANSansWeb_Light.woff2') format('woff2'),
     url('assets/fonts/iransans/woff/IRANSansWeb_Light.woff') format('woff'),
     url('assets/fonts/iransans/ttf/IRANSansWeb_Light.ttf') format('truetype');
-  unicode-range: $arabic-persian-unicode-range;
 }
 
 @font-face {
@@ -45,7 +40,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
     url('assets/fonts/iransans/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'),
     url('assets/fonts/iransans/woff/IRANSansWeb_UltraLight.woff') format('woff'),
     url('assets/fonts/iransans/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
-  unicode-range: $arabic-persian-unicode-range;
 }
 
 @font-face {
@@ -56,7 +50,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
   src: url('assets/fonts/iransans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),
     url('assets/fonts/iransans/woff2/IRANSansWeb.woff2') format('woff2'), url('assets/fonts/iransans/woff/IRANSansWeb.woff') format('woff'),
     url('assets/fonts/iransans/ttf/IRANSansWeb.ttf') format('truetype');
-  unicode-range: $arabic-persian-unicode-range;
 }
 
 @font-face {
@@ -66,7 +59,6 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
   src: url('assets/fonts/iransans/IRANSansWebFaNum.woff2') format('woff2'),
     url('assets/fonts/iransans/IRANSansWebFaNum.woff') format('woff'), url('assets/fonts/iransans/IRANSansWebFaNum.ttf') format('truetype'),
     url('assets/fonts/iransans/IRANSansWebFaNum.eot') format('embedded-opentype');
-  unicode-range: $arabic-persian-unicode-range, U+0030-0039;
 }
 
 @font-face {
@@ -86,11 +78,11 @@ $arabic-persian-unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08BD, U+08D4-08F
   }
 }
 
-$root-font-family: IranSansNumbers, 'Cabin', IRANSans, sans-serif !important;
-$root-eng-font-family: 'Cabin', IRANSans, sans-serif !important;
+$root-font-family: IranSansNumbers, IRANSans, sans-serif !important;
+$root-eng-font-family: IRANSans, sans-serif !important;
 :root {
-  --font-family-sans-serif: IranSansNumbers, 'Cabin', IRANSans, sans-serif !important;
-  --font-family-eng-numbers: 'Cabin', IRANSans, sans-serif !important;
+  --font-family-sans-serif: IranSansNumbers, IRANSans, sans-serif !important;
+  --font-family-eng-numbers: IRANSans, sans-serif !important;
 }
 
 .tooltips,
