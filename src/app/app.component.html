@@ -1,1 +1,21 @@
-<router-outlet></router-outlet>
+<main class="rtl">
+  <div class="container">
+    <section class="username-wrapper">
+      <div class="username-container">
+        <form (submit)="onUsernameSubmit()">
+          <div class="row no-gutters">
+            <div class="col">
+              <input class="username-input" type="text" [formControl]="username" placeholder="نام کاربری">
+            </div>
+            <div class="col-auto">
+              <button class="h-100 mr-3" mat-flat-button color="primary" type="submit">ورود</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <ng-container *ngIf="hasUsername">
+      <router-outlet></router-outlet>
+    </ng-container>
+  </div>
+</main>
