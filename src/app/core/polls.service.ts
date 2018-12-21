@@ -30,10 +30,11 @@ export class PollsService {
     return of<PollDetails>({
       id: 'test',
       title: 'نظرسنجی تست',
-      options: [],
-      participants: [],
+      options: { o1: 3, o2: 0 },
       username: 'vahid',
-      description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+      description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+      status: 1,
+      final_option: 'o1'
     });
   }
 
@@ -45,18 +46,19 @@ export class PollsService {
       {
         id: 'test',
         title: 'نظرسنجی تست',
-        options: [],
-        participants: [],
+        options: { o1: 3, o2: 0 },
         username: 'vahid',
-        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+        status: 1,
+        final_option: 'o1'
       },
       {
         id: 'test',
         title: 'نظرسنجی تست',
-        options: [],
-        participants: [],
+        options: { o1222: 1, olgjwelwe: 2 },
         username: 'vahid',
-        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+        status: 0
       }
     ]);
   }
@@ -67,8 +69,9 @@ export interface PollDetails {
   username: string;
   title: string;
   description: string;
-  options: string[];
-  participants: string[];
+  status: number;
+  options: { [option: string]: number };
+  final_option?: string;
 }
 
 export interface CreatePollForm {
