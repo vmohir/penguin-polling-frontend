@@ -16,9 +16,16 @@ export class PollsService {
     this.username = value;
   }
 
+  finalize(options: PollOption[]): Observable<any> {
+    const optionsReq = options.reduce((res, o) => ({ ...res, [o.name]: o.checked }), {});
+    return this.finalizeReq(optionsReq);
+  }
+  private finalizeReq(options): Observable<any> {
+    return of();
+  }
+
   vote(options: PollOption[]): Observable<any> {
     const optionsReq = options.reduce((res, o) => ({ ...res, [o.name]: o.checked }), {});
-    console.log('​PollsService -> constructor -> optionsReq', optionsReq);
     return this.voteReq(optionsReq);
   }
   private voteReq(options): Observable<any> {
@@ -48,7 +55,18 @@ export class PollsService {
     return of<PollDetailsRes>(optionsTest[0]);
   }
 
-  getPollsList(): Observable<PollDetails[]> {
+  getParticipatedPolls(): Observable<PollDetails[]> {
+    return this.getParticipatedPollsReq().pipe(
+      map(data => {
+        return data.map(p => ({ ...p, options: this.convertOptionResToPollOption(p.options) }));
+      })
+    );
+  }
+  private getParticipatedPollsReq(): Observable<PollDetailsRes[]> {
+    return of<PollDetailsRes[]>(optionsTest);
+  }
+
+  getCreatedPollsList(): Observable<PollDetails[]> {
     return this.getPollsListReq().pipe(
       map(data => {
         return data.map(p => ({ ...p, options: this.convertOptionResToPollOption(p.options) }));
@@ -68,6 +86,7 @@ export interface PollDetailsRes {
   status: number;
   options: { [option: string]: number };
   final_option?: string;
+  creator: string;
 }
 export interface PollDetails {
   id: string;
@@ -77,6 +96,7 @@ export interface PollDetails {
   status: number;
   options: PollOption[];
   final_option?: string;
+  creator: string;
 }
 export interface PollOption {
   checked?: boolean;
@@ -127,7 +147,7 @@ function setLoader(loader: string | LoaderDirective, value: boolean) {
   }
 }
 
-const optionsTest = [
+const optionsTest: PollDetailsRes[] = [
   {
     id: 'test',
     title: 'نظرسنجی تست',
@@ -135,7 +155,8 @@ const optionsTest = [
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
     status: 1,
-    final_option: 'o1'
+    final_option: 'o1',
+    creator: 'vahid'
   },
   {
     id: 'test',
@@ -143,7 +164,8 @@ const optionsTest = [
     options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
-    status: 0
+    status: 0,
+    creator: 'vahid'
   },
   {
     id: 'test',
@@ -152,7 +174,8 @@ const optionsTest = [
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
     status: 1,
-    final_option: 'o1'
+    final_option: 'o1',
+    creator: 'vahid'
   },
   {
     id: 'test',
@@ -160,6 +183,7 @@ const optionsTest = [
     options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
-    status: 0
+    status: 0,
+    creator: 'vahid'
   }
 ];

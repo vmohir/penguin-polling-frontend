@@ -9,7 +9,7 @@ import { PollsService, PollDetails, PollOption, reqPipe } from '@app/core/polls.
   encapsulation: ViewEncapsulation.None
 })
 export class PollSinglePageComponent implements OnInit {
-  pollId: any;
+  pollId: string;
   poll: PollDetails;
   constructor(private route: ActivatedRoute, private pollService: PollsService) {}
   ngOnInit() {
@@ -31,8 +31,23 @@ export class PollSinglePageComponent implements OnInit {
     return index;
   }
 
+  @ViewChild('voteLoader') voteLoader;
   vote() {
-    console.log('​PollSinglePageComponent -> vote -> this.poll.options', this.poll.options);
-    this.pollService.vote(this.poll.options).subscribe(data => {});
+    this.pollService
+      .vote(this.poll.options)
+      .pipe(reqPipe(this.voteLoader))
+      .subscribe(data => {});
+  }
+
+  get isCreator(): boolean {
+    return this.poll && !!this.poll.creator;
+  }
+
+  @ViewChild('finalizeLoader') finalizeLoader;
+  finalize() {
+    this.pollService
+      .vote(this.poll.options)
+      .pipe(reqPipe(this.finalizeLoader))
+      .subscribe(data => {});
   }
 }

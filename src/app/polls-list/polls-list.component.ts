@@ -7,7 +7,8 @@ import { PollsService, PollDetails, reqPipe } from '@app/core/polls.service';
   styleUrls: ['./polls-list.component.scss']
 })
 export class PollsListComponent implements OnInit {
-  pollsList: PollDetails[];
+  createdPolls: PollDetails[] = [];
+  participatedPolls: PollDetails[] = [];
   constructor(private pollService: PollsService) {}
   ngOnInit() {
     this.getPollsList();
@@ -15,11 +16,24 @@ export class PollsListComponent implements OnInit {
 
   @ViewChild('pollsListLoading') pollsListLoading;
   getPollsList() {
+    this.getCreatedPolls();
+    this.getParticipatedPolls();
+  }
+  private getParticipatedPolls() {
     this.pollService
-      .getPollsList()
+      .getParticipatedPolls()
       .pipe(reqPipe(this.pollsListLoading))
       .subscribe(data => {
-        this.pollsList = data;
+        this.participatedPolls = data;
+      });
+  }
+
+  private getCreatedPolls() {
+    this.pollService
+      .getCreatedPollsList()
+      .pipe(reqPipe(this.pollsListLoading))
+      .subscribe(data => {
+        this.createdPolls = data;
       });
   }
 
@@ -27,6 +41,6 @@ export class PollsListComponent implements OnInit {
     return poll.id;
   }
   get emptyPolls(): boolean {
-    return !this.pollsListLoading.is && (!this.pollsList || this.pollsList.length === 0);
+    return !this.pollsListLoading.is && (!this.createdPolls || this.createdPolls.length === 0);
   }
 }

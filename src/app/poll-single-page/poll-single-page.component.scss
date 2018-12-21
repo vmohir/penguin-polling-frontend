@@ -20,14 +20,16 @@
     .mat-checkbox-inner-container {
       margin-right: 0 !important;
     }
-    .mat-checkbox-label {
+    .mat-checkbox-label,
+    .mat-radio-label-content {
       width: 100%;
       .option-count {
         color: #999999;
       }
     }
   }
-  &.mat-checkbox-checked {
+  &.mat-checkbox-checked,
+  &.mat-radio-checked {
     > label {
       background: #f6fffe;
       color: #00695c;
