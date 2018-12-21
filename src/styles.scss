@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+//libraries & shared
+@import '~bootstrap/scss/bootstrap-reboot';
+@import 'scss/shared/shared.scss';
+$theme-colors: (
+  'primary': mat-color($app-primary, 500),
+  'secondary': mat-color($app-accent, 500),
+  'danger': mat-color($app-danger, 500),
+  'success': mat-color($app-success, 500)
+);
+@import '~bootstrap/scss/bootstrap-grid';
+@import '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/tables';
