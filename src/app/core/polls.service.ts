@@ -3,7 +3,7 @@ import { Observable, of, MonoTypeOperatorFunction, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoaderDirective } from '@app/directives/loader/loader.directive';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { takeUntil, catchError, tap } from 'rxjs/operators';
+import { takeUntil, catchError, tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,19 @@ export class PollsService {
   }
 
   getPollDetails(pollId: string): Observable<PollDetails> {
-    return this.getPollDetailsReq(pollId);
+    return this.getPollDetailsReq(pollId).pipe(
+      map(data => {
+        const result: PollDetails = { ...data, options: this.convertOptionResToPollOption(data.options) };
+        return result;
+      })
+    );
   }
-  private getPollDetailsReq(pollId: string): Observable<PollDetails> {
-    return of<PollDetails>({
+  private convertOptionResToPollOption(options: PollDetailsRes['options']): PollOption[] {
+    return Object.keys(options).map(x => ({ name: x, count: options[x] }));
+  }
+
+  private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
+    return of<PollDetailsRes>({
       id: 'test',
       title: 'نظرسنجی تست',
       options: { o1: 3, o2: 0 },
@@ -39,10 +48,14 @@ export class PollsService {
   }
 
   getPollsList(): Observable<PollDetails[]> {
-    return this.getPollsListReq();
+    return this.getPollsListReq().pipe(
+      map(data => {
+        return data.map(p => ({ ...p, options: this.convertOptionResToPollOption(p.options) }));
+      })
+    );
   }
-  private getPollsListReq(): Observable<any> {
-    return of<PollDetails[]>([
+  private getPollsListReq(): Observable<PollDetailsRes[]> {
+    return of<PollDetailsRes[]>([
       {
         id: 'test',
         title: 'نظرسنجی تست',
@@ -64,7 +77,7 @@ export class PollsService {
   }
 }
 
-export interface PollDetails {
+export interface PollDetailsRes {
   id: string;
   username: string;
   title: string;
@@ -72,6 +85,19 @@ export interface PollDetails {
   status: number;
   options: { [option: string]: number };
   final_option?: string;
+}
+export interface PollDetails {
+  id: string;
+  username: string;
+  title: string;
+  description: string;
+  status: number;
+  options: PollOption[];
+  final_option?: string;
+}
+export interface PollOption {
+  name: string;
+  count: number;
 }
 
 export interface CreatePollForm {
