@@ -34,4 +34,12 @@ export class AppComponent {
   onClickCreatePoll() {
     this.router.navigate(['/new']);
   }
+
+  goHome() {
+    this.router.navigate(['']);
+  }
+  logout() {
+    this.username.reset();
+    this.LS.clear();
+  }
 }

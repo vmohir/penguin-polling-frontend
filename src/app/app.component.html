@@ -12,7 +12,7 @@
             </div>
           </div>
         </form>
-        <div *ngIf="hasUsername" class="row align-items-center">
+        <div *ngIf="hasUsername" class="row align-items-center no-gutters">
           <div class="col rtl-text">
             شما با ایمیل
             <span>{{username.value}}</span>
@@ -20,7 +20,10 @@
           </div>
 
           <div class="col-auto">
-            <button mat-button color="warn">خروج</button>
+            <button mat-button color="primary" (click)="goHome()">خانه</button>
+          </div>
+          <div class="col-auto">
+            <button mat-button color="warn" (click)="logout()">خروج</button>
           </div>
         </div>
       </div>

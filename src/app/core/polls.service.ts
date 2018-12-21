@@ -27,21 +27,48 @@ export class PollsService {
     return this.getPollDetailsReq(pollId);
   }
   private getPollDetailsReq(pollId: string): Observable<PollDetails> {
-    return of<PollDetails>({ id: pollId, title: 'testpoll', options: [] });
+    return of<PollDetails>({
+      id: 'test',
+      title: 'نظرسنجی تست',
+      options: [],
+      participants: [],
+      username: 'vahid',
+      description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+    });
   }
 
   getPollsList(): Observable<PollDetails[]> {
     return this.getPollsListReq();
   }
   private getPollsListReq(): Observable<any> {
-    return of<PollDetails[]>([{ id: 'test', title: 'poll1', options: [] }]);
+    return of<PollDetails[]>([
+      {
+        id: 'test',
+        title: 'نظرسنجی تست',
+        options: [],
+        participants: [],
+        username: 'vahid',
+        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+      },
+      {
+        id: 'test',
+        title: 'نظرسنجی تست',
+        options: [],
+        participants: [],
+        username: 'vahid',
+        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت'
+      }
+    ]);
   }
 }
 
 export interface PollDetails {
-  title: string;
-  options: any[];
   id: string;
+  username: string;
+  title: string;
+  description: string;
+  options: string[];
+  participants: string[];
 }
 
 export interface CreatePollForm {

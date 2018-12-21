@@ -1,3 +1,6 @@
-<section>
+<section #pollsListLoading="loader" loader>
+  <div *ngIf="emptyPolls" class="text-center p-4">
+    شما در هیچ نظرسنجی شرکت نکرده‌اید. با استفاده از دکمه‌ی بالا یک نظرسنجی جدید بسازید
+  </div>
   <app-poll-item *ngFor="let poll of pollsList; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
 </section>
