@@ -12,6 +12,14 @@ export class PollsService {
   setUsername(value: string) {
     this.username = value;
   }
+
+  getPollDetails(pollId: string): Observable<PollDetails> {
+    return this.getPollDetailsReq(pollId);
+  }
+  private getPollDetailsReq(pollId: string): Observable<PollDetails> {
+    return of<PollDetails>({ id: pollId, title: 'testpoll', options: [] });
+  }
+
   getPollsList(): Observable<PollDetails[]> {
     return this.getPollsListReq();
   }

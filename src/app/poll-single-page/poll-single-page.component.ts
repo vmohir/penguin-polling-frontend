@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PollsService, PollDetails } from '@app/core/polls.service';
 
 @Component({
   selector: 'app-poll-single-page',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./poll-single-page.component.scss']
 })
 export class PollSinglePageComponent implements OnInit {
-
-  constructor() { }
-
+  pollId: any;
+  poll: PollDetails;
+  constructor(private route: ActivatedRoute, private pollService: PollsService) {}
   ngOnInit() {
+    this.pollId = this.route.snapshot.params.id;
+    this.getPoll();
   }
-
+  getPoll() {
+    this.pollService.getPollDetails(this.pollId).subscribe(data => (this.poll = data));
+  }
 }

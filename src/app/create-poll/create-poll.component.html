@@ -1,0 +1,12 @@
+<div>
+  <form [formGroup]="pollForm">
+    <mat-form-field class="w-100">
+      <input matInput type="text" formControlName="title" placeholder="عنوان نظرسنجی">
+    </mat-form-field>
+
+    <div formArrayName="options" *ngFor="let o of pollOptions.controls, let i = index">
+      <div [formGroupName]="i">
+      </div>
+    </div>
+  </form>
+</div>
