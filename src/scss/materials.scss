@@ -1,0 +1,77 @@
+@import 'btstrp-materials';
+@import 'ng-materials';
+// divider
+.divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid #fff;
+  padding: 3px 6px;
+  line-height: 1;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: bold;
+  vertical-align: middle;
+  text-transform: none;
+  @include rtl {
+    margin-right: 12px;
+  }
+  @include ltr {
+    margin-left: 12px;
+  }
+  &.badge-primary {
+    border-color: mat-color($app-primary, 500);
+    color: mat-color($app-primary, 500);
+  }
+  &.badge-primary-text {
+    border-color: #efefef;
+    color: mat-color($app-primary, 500);
+  }
+
+  &.badge-accent {
+    border-color: mat-color($app-accent, 400);
+    color: mat-color($app-accent, 400);
+  }
+  &.badge-accent-text {
+    border-color: #efefef;
+    color: mat-color($app-accent, 400);
+  }
+
+  &.badge-third {
+    border-color: mat-color($app-third, 500);
+    color: mat-color($app-third, 500);
+  }
+  &.badge-third-text {
+    border-color: #efefef;
+    color: mat-color($app-third, 500);
+  }
+}
+// main page loading
+#page-loader-indicator {
+  background: #fff;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-orient: vertical;
+  box-direction: normal;
+  box-align: center;
+  box-pack: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10000;
+  transition: opacity 0.3s ease-in-out;
+  .loader:after {
+    width: 50px;
+    height: 50px;
+  }
+}

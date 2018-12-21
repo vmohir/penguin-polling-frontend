@@ -45,7 +45,7 @@
               "includePaths": ["src/scss/shared"]
             },
             "assets": ["src/assets"],
-            "styles": ["src/assets/fonts/flaticon/_flaticon.scss", "src/styles.scss"],
+            "styles": ["src/assets/fonts/flaticon/font/flaticon.css", "src/styles.scss"],
             "scripts": []
           },
           "configurations": {

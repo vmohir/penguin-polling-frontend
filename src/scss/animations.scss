@@ -1,0 +1,14 @@
+.offsetAndDelayAnimation {
+  opacity: 0;
+  animation: openingAttributionItems 0.5s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes openingAttributionItems {
+  // 0% {
+  //   margin-right: 20px;
+  // }
+  100% {
+    margin-right: 0;
+    opacity: 1;
+  }
+}

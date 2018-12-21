@@ -1,0 +1,14 @@
+.alert {
+  border-radius: 0;
+  border: none;
+  border-right: 3px solid;
+}
+
+.alert-danger {
+  color: mat-color($app-danger, 900);
+  background-color: mat-color($app-danger, 50);
+}
+
+.text-third {
+  color: mat-color($app-third, 500) !important;
+}

@@ -11,3 +11,13 @@ $theme-colors: (
 @import '~bootstrap/scss/utilities';
 @import '~bootstrap/scss/type';
 @import '~bootstrap/scss/tables';
+
+// base
+@import 'scss/animations.scss';
+@import 'scss/general.scss';
+@import 'scss/fonts.scss';
+
+// general components
+@import 'scss/materials.scss';
+@import 'scss/loader.scss';
+@import 'scss/dialogs.scss';

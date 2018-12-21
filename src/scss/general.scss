@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IranSansNumbers', IRANSans, sans-serif;
+  background: $body-bg !important;
+  color: $body-color;
+  overflow-x: hidden;
+  text-align: right;
+  font-size: 14px;
+  &.dir-rtl {
+    direction: rtl;
+  }
+}
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+i {
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none !important;
+  color: #333;
+  outline: none !important;
+  &:hover {
+    color: #222;
+  }
+}
+
+*:focus,
+a:focus,
+a:active,
+a:hover,
+a,
+input,
+textarea,
+button:focus,
+select,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0 !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #666;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+  height: 50px;
+  border-radius: 5px;
+}
+
+p {
+  color: #444;
+  line-height: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+ins {
+  text-decoration: none;
+}
+
+code {
+  direction: ltr;
+}
+
+html {
+  height: 100vh;
+}
+body {
+  min-height: 100vh;
+}
+
+main {
+  min-height: 100vh;
+}
+.opacity-15 {
+  opacity: 0.15;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable-table-row {
+  @extend .clickable;
+  &:hover td {
+    background: mat-color($app-primary, 50) !important;
+  }
+}
+
+.no-break {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}
+
+.icon-one-line {
+  display: inline-block;
+  line-height: 1;
+}
+
+.inline-table-input {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 6px 6px 5px;
+  &:focus {
+    border-color: #bbb;
+  }
+}
+
+.simple-notification-wrapper {
+  z-index: 10000 !important;
+  @include not-sm {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: 0 !important;
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+.min-width-0 {
+  min-width: 0 !important;
+}
+.visibility-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.vicon-ios {
+  line-height: 70% !important;
+  height: 30px;
+  vertical-align: middle;
+  &:before {
+    content: 'iOS';
+    font-style: normal;
+    font-family: sans-serif;
+    font-size: 70%;
+  }
+}
+
+.unordered-list {
+  padding-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  > li {
+    list-style-type: disc;
+  }
+}
