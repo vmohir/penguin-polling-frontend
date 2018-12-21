@@ -1,7 +1,17 @@
-<div class="poll-item">
-  <h3>{{poll?.title}}</h3>
-  <p>{{poll?.description}}</p>
-  <ul>
-    <li *ngFor="let o of poll.options; trackBy:trackByFnOptions"></li>
-  </ul>
+<div #pollLoader="loader" loader>
+  <div class="poll-item">
+    <h3>{{poll?.title}}</h3>
+    <p>{{poll?.description}}</p>
+  </div>
+  <div>
+    <mat-checkbox class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [(ngModel)]="o.checked">
+      <div class="row no-gutters">
+        <span class="col">{{o.name}}</span>
+        <span class="col-auto option-count">{{o.count}} رای</span>
+      </div>
+    </mat-checkbox>
+  </div>
+  <div class="submit-container">
+    <button class="" mat-raised-button color="accent" type="button" (click)="vote()">ثبت رای</button>
+  </div>
 </div>

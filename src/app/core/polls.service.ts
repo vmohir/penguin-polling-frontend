@@ -16,6 +16,15 @@ export class PollsService {
     this.username = value;
   }
 
+  vote(options: PollOption[]): Observable<any> {
+    const optionsReq = options.reduce((res, o) => ({ ...res, [o.name]: o.checked }), {});
+    console.log('​PollsService -> constructor -> optionsReq', optionsReq);
+    return this.voteReq(optionsReq);
+  }
+  private voteReq(options): Observable<any> {
+    return of();
+  }
+
   submitPoll(submitForm: CreatePollForm): Observable<any> {
     return this.submitPollReq(submitForm);
   }
@@ -32,19 +41,11 @@ export class PollsService {
     );
   }
   private convertOptionResToPollOption(options: PollDetailsRes['options']): PollOption[] {
-    return Object.keys(options).map(x => ({ name: x, count: options[x] }));
+    return Object.keys(options).map(x => ({ name: x, count: options[x], checked: false }));
   }
 
   private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
-    return of<PollDetailsRes>({
-      id: 'test',
-      title: 'نظرسنجی تست',
-      options: { o1: 3, o2: 0 },
-      username: 'vahid',
-      description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
-      status: 1,
-      final_option: 'o1'
-    });
+    return of<PollDetailsRes>(optionsTest[0]);
   }
 
   getPollsList(): Observable<PollDetails[]> {
@@ -55,25 +56,7 @@ export class PollsService {
     );
   }
   private getPollsListReq(): Observable<PollDetailsRes[]> {
-    return of<PollDetailsRes[]>([
-      {
-        id: 'test',
-        title: 'نظرسنجی تست',
-        options: { o1: 3, o2: 0 },
-        username: 'vahid',
-        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
-        status: 1,
-        final_option: 'o1'
-      },
-      {
-        id: 'test',
-        title: 'نظرسنجی تست',
-        options: { o1222: 1, olgjwelwe: 2 },
-        username: 'vahid',
-        description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
-        status: 0
-      }
-    ]);
+    return of<PollDetailsRes[]>(optionsTest);
   }
 }
 
@@ -96,6 +79,7 @@ export interface PollDetails {
   final_option?: string;
 }
 export interface PollOption {
+  checked?: boolean;
   name: string;
   count: number;
 }
@@ -142,3 +126,40 @@ function setLoader(loader: string | LoaderDirective, value: boolean) {
     loader.is = value;
   }
 }
+
+const optionsTest = [
+  {
+    id: 'test',
+    title: 'نظرسنجی تست',
+    options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
+    username: 'vahid',
+    description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+    status: 1,
+    final_option: 'o1'
+  },
+  {
+    id: 'test',
+    title: 'نظرسنجی تست',
+    options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
+    username: 'vahid',
+    description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+    status: 0
+  },
+  {
+    id: 'test',
+    title: 'نظرسنجی تست',
+    options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
+    username: 'vahid',
+    description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+    status: 1,
+    final_option: 'o1'
+  },
+  {
+    id: 'test',
+    title: 'نظرسنجی تست',
+    options: { 'همینجوری هی گزینه تست اینجا ست': 3, 'ناینم یکه کزینه دست تیسد گه': 0 },
+    username: 'vahid',
+    description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
+    status: 0
+  }
+];

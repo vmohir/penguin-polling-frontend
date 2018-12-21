@@ -1,12 +1,43 @@
+@import 'shared';
 .poll-item {
-  max-width: 710px;
-  margin: 0 auto 7px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 1px 10px #ddd;
+  @extend .box-item;
 
   > h3 {
     font-size: 20px;
   }
+  > p {
+    margin-bottom: 0;
+  }
+}
+
+.poll-option {
+  display: block !important;
+  max-width: 710px;
+  margin: 0 auto;
+  > label {
+    width: 100%;
+    @extend .box-item;
+    .mat-checkbox-inner-container {
+      margin-right: 0 !important;
+    }
+    .mat-checkbox-label {
+      width: 100%;
+      .option-count {
+        color: #999999;
+      }
+    }
+  }
+  &.mat-checkbox-checked {
+    > label {
+      background: #f6fffe;
+      color: #00695c;
+      border-right: 4px solid #009688;
+    }
+  }
+}
+
+.submit-container {
+  max-width: 710px;
+  margin: 15px auto;
+  text-align: left;
 }

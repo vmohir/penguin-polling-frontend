@@ -1,10 +1,6 @@
+@import 'shared';
 .poll-item {
-  max-width: 710px;
-  margin: 0 auto 7px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 1px 10px #ddd;
+  @extend .box-item;
   cursor: pointer;
 
   > h3 {
