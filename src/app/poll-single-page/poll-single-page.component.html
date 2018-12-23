@@ -12,7 +12,7 @@
     </mat-checkbox>
   </div>
   <div *ngIf="isCreator">
-    <mat-radio-group>
+    <mat-radio-group (change)="finalOptionChange($event)">
       <mat-radio-button class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [value]="o.name">
         <div class="row no-gutters">
           <span class="col">{{o.name}}</span>

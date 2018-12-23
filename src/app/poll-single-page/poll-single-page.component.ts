@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PollsService, PollDetails, PollOption, reqPipe } from '@app/core/polls.service';
+import { MatRadioChange } from '@angular/material';
 
 @Component({
   selector: 'app-poll-single-page',
@@ -51,5 +52,9 @@ export class PollSinglePageComponent implements OnInit {
       .finalize(this.poll.id, this.selectedPoll)
       .pipe(reqPipe(this.finalizeLoader))
       .subscribe(data => {});
+  }
+
+  finalOptionChange(event: MatRadioChange) {
+    this.selectedPoll = event.value;
   }
 }
