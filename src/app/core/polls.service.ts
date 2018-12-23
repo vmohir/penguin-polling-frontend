@@ -16,27 +16,29 @@ export class PollsService {
     this.username = value;
   }
 
-  finalize(options: PollOption[]): Observable<any> {
-    const optionsReq = options.reduce((res, o) => ({ ...res, [o.name]: o.checked }), {});
-    return this.finalizeReq(optionsReq);
+  finalize(pollId: string, option: string): Observable<any> {
+    return this.finalizeReq(pollId, option);
   }
-  private finalizeReq(options): Observable<any> {
-    return of();
+  private finalizeReq(pollId: string, option): Observable<any> {
+    // return of();
+    return this.http.post(`${API_BASE}/finalize/${pollId}`, { option, username: this.username });
   }
 
-  vote(options: PollOption[]): Observable<any> {
+  vote(pollId: string, options: PollOption[]): Observable<any> {
     const optionsReq = options.reduce((res, o) => ({ ...res, [o.name]: o.checked }), {});
-    return this.voteReq(optionsReq);
+    return this.voteReq(pollId, optionsReq);
   }
-  private voteReq(options): Observable<any> {
-    return of();
+  private voteReq(pollId: string, options: { [key: string]: string }): Observable<any> {
+    // return of();
+    return this.http.post(`${API_BASE}/vote/${pollId}`, { username: this.username, options });
   }
 
   submitPoll(submitForm: CreatePollForm): Observable<any> {
     return this.submitPollReq(submitForm);
   }
   private submitPollReq(submitForm: CreatePollForm): Observable<any> {
-    return of<any[]>([]);
+    // return of<any[]>([]);
+    return this.http.post(`${API_BASE}/create`, submitForm);
   }
 
   getPollDetails(pollId: string): Observable<PollDetails> {
@@ -52,7 +54,8 @@ export class PollsService {
   }
 
   private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
-    return of<PollDetailsRes>(optionsTest[0]);
+    // return of<PollDetailsRes>(optionsTest[0]);
+    return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
   }
 
   getParticipatedPolls(): Observable<PollDetails[]> {
@@ -63,7 +66,8 @@ export class PollsService {
     );
   }
   private getParticipatedPollsReq(): Observable<PollDetailsRes[]> {
-    return of<PollDetailsRes[]>(optionsTest);
+    // return of<PollDetailsRes[]>(optionsTest);
+    return this.http.get<PollDetailsRes[]>(`${API_BASE}/created`, { params: { username: this.username } });
   }
 
   getCreatedPollsList(): Observable<PollDetails[]> {
@@ -74,7 +78,8 @@ export class PollsService {
     );
   }
   private getPollsListReq(): Observable<PollDetailsRes[]> {
-    return of<PollDetailsRes[]>(optionsTest);
+    // return of<PollDetailsRes[]>(optionsTest);
+    return this.http.get<PollDetailsRes[]>(`${API_BASE}/participated`, { params: { username: this.username } });
   }
 }
 
@@ -187,3 +192,5 @@ const optionsTest: PollDetailsRes[] = [
     creator: 'vahid'
   }
 ];
+
+export const API_BASE = 'http://172.30.49.86:8100/api/v1/polling';

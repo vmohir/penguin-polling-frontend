@@ -34,7 +34,7 @@ export class PollSinglePageComponent implements OnInit {
   @ViewChild('voteLoader') voteLoader;
   vote() {
     this.pollService
-      .vote(this.poll.options)
+      .vote(this.poll.id, this.poll.options)
       .pipe(reqPipe(this.voteLoader))
       .subscribe(data => {});
   }
@@ -43,10 +43,12 @@ export class PollSinglePageComponent implements OnInit {
     return this.poll && !!this.poll.creator;
   }
 
+  selectedPoll: string;
+
   @ViewChild('finalizeLoader') finalizeLoader;
   finalize() {
     this.pollService
-      .vote(this.poll.options)
+      .finalize(this.poll.id, this.selectedPoll)
       .pipe(reqPipe(this.finalizeLoader))
       .subscribe(data => {});
   }
