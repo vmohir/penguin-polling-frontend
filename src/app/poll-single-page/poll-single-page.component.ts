@@ -25,6 +25,9 @@ export class PollSinglePageComponent implements OnInit {
       .pipe(reqPipe(this.pollLoader))
       .subscribe(data => {
         this.poll = data;
+        // this.poll.options.forEach(o => {
+        //   if (this.isFinalOption(o)) o.checked = true;
+        // });
       });
   }
 
@@ -41,7 +44,13 @@ export class PollSinglePageComponent implements OnInit {
   }
 
   get isCreator(): boolean {
-    return this.poll && !!this.poll.creator;
+    return this.poll && this.poll.creator === this.pollService.getUsername();
+  }
+  get final_option(): string {
+    return this.poll && this.poll.final_option;
+  }
+  isFinalOption(option: PollOption): boolean {
+    return this.poll && this.poll.final_option === option.name;
   }
 
   selectedPoll: string;

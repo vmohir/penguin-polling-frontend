@@ -2,12 +2,14 @@
   <div *ngIf="emptyPolls" class="text-center p-4">
     شما در هیچ نظرسنجی شرکت نکرده‌اید. با استفاده از دکمه‌ی بالا یک نظرسنجی جدید بسازید
   </div>
-  <div class="created-polls">
-    <h3>نظرسنجی‌هایی که ساخته‌اید</h3>
-    <app-poll-item *ngFor="let poll of createdPolls; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
-  </div>
-  <div class="participated-polls">
-    <h3>نظرسنجی‌هایی که در آن‌ها شرکت کرده‌اید</h3>
-    <app-poll-item *ngFor="let poll of participatedPolls; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
+  <div *ngIf="!emptyPolls">
+    <div class="created-polls">
+      <h3>نظرسنجی‌هایی که ساخته‌اید</h3>
+      <app-poll-item *ngFor="let poll of createdPolls; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
+    </div>
+    <div class="participated-polls">
+      <h3>نظرسنجی‌هایی که در آن‌ها شرکت کرده‌اید</h3>
+      <app-poll-item *ngFor="let poll of participatedPolls; trackBy:trackByFnPolls" [poll]="poll"></app-poll-item>
+    </div>
   </div>
 </section>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PollsService, PollDetails, reqPipe } from '@app/core/polls.service';
+import { LoaderDirective } from '@app/directives/loader/loader.directive';
 
 @Component({
   selector: 'app-polls-list',
@@ -14,7 +15,7 @@ export class PollsListComponent implements OnInit {
     this.getPollsList();
   }
 
-  @ViewChild('pollsListLoading') pollsListLoading;
+  @ViewChild('pollsListLoading') pollsListLoading: LoaderDirective;
   getPollsList() {
     this.getCreatedPolls();
     this.getParticipatedPolls();
@@ -33,6 +34,7 @@ export class PollsListComponent implements OnInit {
       .getCreatedPollsList()
       .pipe(reqPipe(this.pollsListLoading))
       .subscribe(data => {
+        console.log('​PollsListComponent -> privategetCreatedPolls -> data', data);
         this.createdPolls = data;
       });
   }
@@ -41,6 +43,13 @@ export class PollsListComponent implements OnInit {
     return poll.id;
   }
   get emptyPolls(): boolean {
-    return !this.pollsListLoading.is && (!this.createdPolls || this.createdPolls.length === 0);
+    console.log('​PollsListComponent -> constructor -> this.pollsListLoading', this.pollsListLoading);
+    console.log('​PollsListComponent -> constructor -> this.createdPolls', this.createdPolls);
+    console.log('​PollsListComponent -> constructor -> this.createdPolls', this.participatedPolls);
+    return (
+      !this.pollsListLoading.is &&
+      (!this.createdPolls || this.createdPolls.length === 0) &&
+      (!this.participatedPolls || this.participatedPolls.length === 0)
+    );
   }
 }

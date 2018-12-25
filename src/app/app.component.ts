@@ -29,6 +29,7 @@ export class AppComponent {
   onUsernameSubmit() {
     this.LS.set('username', this.username.value);
     this.pollService.setUsername(this.username.value);
+    this.router.navigate(['/']);
   }
 
   onClickCreatePoll() {

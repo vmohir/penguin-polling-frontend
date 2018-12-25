@@ -4,6 +4,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material';
 import { FormService } from '@app/core/form.service';
 import { PollsService, reqPipe } from '@app/core/polls.service';
+import { LoaderDirective } from '@app/directives/loader/loader.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-poll',
@@ -24,19 +26,24 @@ export class CreatePollComponent implements OnInit {
       participants: this.pollParticipants
     });
   }
-  constructor(private formService: FormService, private formBuilder: FormBuilder, private pollService: PollsService) {
+  constructor(
+    private formService: FormService,
+    private formBuilder: FormBuilder,
+    private pollService: PollsService,
+    private router: Router
+  ) {
     this.buildPollForm();
   }
   ngOnInit() {}
 
-  @ViewChild('submitLoader') submitLoader;
+  @ViewChild('submitLoader') submitLoader: LoaderDirective;
   submitPollForm() {
     if (!this.formService.validateForm(this.pollForm)) return;
     this.pollService
       .submitPoll(this.pollForm.value)
       .pipe(reqPipe(this.submitLoader))
       .subscribe(data => {
-        // TODO: redirect to the poll page
+        this.router.navigate(['/']);
       });
   }
 
@@ -77,6 +84,6 @@ export class CreatePollComponent implements OnInit {
     this.pollParticipants.removeAt(index);
   }
   removeOption(index: number): void {
-    this.pollParticipants.removeAt(index);
+    this.pollOptions.removeAt(index);
   }
 }

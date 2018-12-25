@@ -27,16 +27,16 @@
 
     <h4>چه کسانی می‌توانند در این نظرسنجی شرکت کنند؟</h4>
     <div formArrayName="participants">
-      <mat-form-field class="w-100 ltr">
+      <mat-form-field class="w-100 rtl-text">
         <mat-chip-list #participantsChipsList>
           <mat-chip *ngFor="let p of pollParticipants.controls, let i = index" [selectable]="true" [removable]="true"
-                    (removed)="removeParticipant(i)">
+                    (removed)="removeParticipant(i)" class="ltr-text">
             <span [formGroupName]="i">{{p.value}}</span>
             <i class="flaticon-005-cancel-1 remove-button ml-2" matChipRemove></i>
           </mat-chip>
           <input placeholder="ایمیل یک شخص را وارد کنید و Enter را بزنید" [matChipInputFor]="participantsChipsList"
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-                 (matChipInputTokenEnd)="addParticipant($event)">
+                 (matChipInputTokenEnd)="addParticipant($event)" class="ltr-text">
         </mat-chip-list>
       </mat-form-field>
     </div>
