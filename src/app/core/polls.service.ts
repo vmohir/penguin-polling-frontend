@@ -9,6 +9,9 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PollsService {
+  getOptionComments(pollId: string, commentId: string): Observable<OptionComment[]> {
+    return this.http.get<OptionComment[]>(`${API_BASE}/comments/${pollId}/${commentId}`, { params: { username: this.username } });
+  }
   private username?: string;
   constructor(private http: HttpClient) {}
 
@@ -29,7 +32,6 @@ export class PollsService {
 
   vote(pollId: string, options: PollOption[]): Observable<any> {
     const optionsReq = options.reduce<{ [key: string]: number }>((res, o) => ({ ...res, [o.id]: o.checked }), {});
-    console.log('​PollsService -> constructor -> optionsReq', optionsReq);
     return this.voteReq(pollId, optionsReq);
   }
   private voteReq(pollId: string, options: { [key: string]: number }): Observable<any> {
@@ -109,6 +111,7 @@ export interface PollDetails {
   creator: string;
 }
 export interface PollOption {
+  comments?: OptionComment[];
   checked?: number;
   id: string;
   value: string;
@@ -139,6 +142,15 @@ export interface WeekOption {
   weekday: number;
   start_time: string;
   end_time: string;
+}
+
+export interface OptionComment {
+  id: string;
+  message: string;
+  date: string;
+  user: string;
+  option_id: string;
+  parent: string | undefined;
 }
 
 export function reqPipe<T>(
@@ -187,8 +199,7 @@ const optionsTest: PollDetailsRes[] = [
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
     status: 1,
-    final_option: 'o1',
-    creator: 'vahid',
+    creator: 'amir',
     is_normal: false
   },
   {
@@ -214,7 +225,7 @@ const optionsTest: PollDetailsRes[] = [
     username: 'vahid',
     description: 'توضیحات نسین صثمن بمثنص تصمثنبت ثصم نتبصثمن تثصنمب ت',
     status: 1,
-    final_option: 'o1',
+    final_option: '4',
     creator: 'vahid',
     is_normal: false
   },

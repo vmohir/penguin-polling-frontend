@@ -41,12 +41,7 @@ export class PollSinglePageComponent implements OnInit {
     this.pollService
       .vote(this.poll.id, this.poll.options)
       .pipe(reqPipe(this.voteLoader))
-      .subscribe(
-        data => {},
-        error => {
-          console.log('​PollSinglePageComponent -> vote -> error', error);
-        }
-      );
+      .subscribe(data => {}, error => {});
   }
 
   get isCreator(): boolean {
@@ -56,7 +51,7 @@ export class PollSinglePageComponent implements OnInit {
     return this.poll && this.poll.final_option;
   }
   isFinalOption(option: PollOption): boolean {
-    return this.poll && this.poll.final_option === option.name;
+    return this.poll && this.poll.final_option === option.id;
   }
 
   selectedPoll: number;
@@ -74,6 +69,7 @@ export class PollSinglePageComponent implements OnInit {
   }
 
   chooseOptionYes(option: PollOption) {
+    if (this.final_option) return;
     if (option.checked === YES) {
       option.yes -= 1;
       option.checked = NO;
@@ -87,6 +83,7 @@ export class PollSinglePageComponent implements OnInit {
     }
   }
   chooseOptionMaybe(option: PollOption) {
+    if (this.final_option) return;
     if (option.checked === MAYBE) {
       option.maybe -= 1;
       option.checked = NO;
@@ -105,5 +102,11 @@ export class PollSinglePageComponent implements OnInit {
   }
   isOptionYes(option: PollOption): boolean {
     return option.checked === YES;
+  }
+
+  viewComments(option: PollOption) {
+    this.pollService.getOptionComments(this.poll.id, option.id).subscribe(data => {
+      option.comments = data;
+    });
   }
 }

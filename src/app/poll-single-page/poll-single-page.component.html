@@ -1,27 +1,34 @@
 <div #pollLoader="loader" loader>
   <ng-container *ngIf="poll">
     <div class="poll-item">
-      <h3>{{poll?.title}}</h3>
-      <p>{{poll?.description}}</p>
+      <h3>{{poll.title}}</h3>
+      <p>{{poll.description}}</p>
     </div>
     <div *ngIf="!isCreator">
-      <div class="poll-option" *ngFor="let o of poll?.options; trackBy:trackByFnOptions">
-        <div class="row no-gutters">
-          <span class="col">{{o.name}}</span>
+      <div class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [class.is-finalized]="final_option">
+        <div class="poll-option-vote-content row no-gutters">
+          <span class="col">{{o.value}}</span>
+          <span class="col-auto" (click)="viewComments(o)">مشاهده نظرات</span>
           <span class="col-auto option-count option-yes" [class.active-option]="isOptionYes(o)" (click)="chooseOptionYes(o)">
             {{o.yes}} بله</span>
           <span class="col-auto option-count option-maybe" [class.active-option]="isOptionMaybe(o)" (click)="chooseOptionMaybe(o)">
             {{o.maybe}} ناچارا</span>
           <span *ngIf="isFinalOption(o)" class="final-option">رای نهایی</span>
         </div>
+        <div class="poll-option-comments" *ngIf="o.comments && o.comments.length > 0">
+          <div *ngFor="let c of o.comments">
+            <span>{{c.user}}</span>
+            <span>{{c.date}}</span>
+            <span>{{c.message}}</span>
+          </div>
+        </div>
       </div>
     </div>
     <div *ngIf="isCreator">
       <mat-radio-group (change)="finalOptionChange($event)">
-        <mat-radio-button class="poll-option" *ngFor="let o of poll.options; let i = index; trackBy:trackByFnOptions"
-                          [value]="i">
+        <mat-radio-button class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [value]="o.id">
           <div class="row no-gutters">
-            <span class="col">{{o.name}}</span>
+            <span class="col">{{o.value}}</span>
             <span class="col-auto option-count">{{o.yes}} بله</span>
             <span class="col-auto option-count">{{o.maybe}} ناچارا</span>
           </div>
