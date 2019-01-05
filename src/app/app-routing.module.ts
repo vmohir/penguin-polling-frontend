@@ -5,9 +5,9 @@ import { PollSinglePageComponent } from './poll-single-page/poll-single-page.com
 import { CreatePollComponent } from './create-poll/create-poll.component';
 
 const routes: Routes = [
-  { path: '', component: PollsListComponent },
   { path: 'poll/:id', component: PollSinglePageComponent },
-  { path: 'new', component: CreatePollComponent }
+  { path: 'new', component: CreatePollComponent },
+  { path: '', component: PollsListComponent }
 ];
 
 @NgModule({
