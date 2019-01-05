@@ -25,6 +25,15 @@
       width: 100%;
       .option-count {
         color: #999999;
+        &.option-yes {
+          color: #00a008;
+        }
+        &.option-maybe {
+          color: #b88d00;
+        }
+        &.active-option {
+          background: #f9f9f9;
+        }
       }
     }
   }

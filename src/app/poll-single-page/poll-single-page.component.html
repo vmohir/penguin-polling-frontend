@@ -5,21 +5,25 @@
       <p>{{poll?.description}}</p>
     </div>
     <div *ngIf="!isCreator">
-      <mat-checkbox class="poll-option" *ngFor="let o of poll?.options; trackBy:trackByFnOptions" [(ngModel)]="o.checked"
-                    [disabled]="final_option">
+      <div class="poll-option" *ngFor="let o of poll?.options; trackBy:trackByFnOptions">
         <div class="row no-gutters">
           <span class="col">{{o.name}}</span>
-          <span class="col-auto option-count">{{o.count}} رای</span>
+          <span class="col-auto option-count option-yes" [class.active-option]="isOptionYes(o)" (click)="chooseOptionYes(o)">
+            {{o.yes}} بله</span>
+          <span class="col-auto option-count option-maybe" [class.active-option]="isOptionMaybe(o)" (click)="chooseOptionMaybe(o)">
+            {{o.maybe}} ناچارا</span>
           <span *ngIf="isFinalOption(o)" class="final-option">رای نهایی</span>
         </div>
-      </mat-checkbox>
+      </div>
     </div>
     <div *ngIf="isCreator">
       <mat-radio-group (change)="finalOptionChange($event)">
-        <mat-radio-button class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [value]="o.name">
+        <mat-radio-button class="poll-option" *ngFor="let o of poll.options; let i = index; trackBy:trackByFnOptions"
+                          [value]="i">
           <div class="row no-gutters">
             <span class="col">{{o.name}}</span>
-            <span class="col-auto option-count">{{o.count}} رای</span>
+            <span class="col-auto option-count">{{o.yes}} بله</span>
+            <span class="col-auto option-count">{{o.maybe}} ناچارا</span>
           </div>
         </mat-radio-button>
       </mat-radio-group>

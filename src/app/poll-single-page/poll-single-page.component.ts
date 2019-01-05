@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PollsService, PollDetails, PollOption, reqPipe } from '@app/core/polls.service';
+import { PollsService, PollDetails, PollOption, reqPipe, YES, NO, MAYBE } from '@app/core/polls.service';
 import { MatRadioChange } from '@angular/material';
+import { LoaderDirective } from '@app/directives/loader/loader.directive';
 
 @Component({
   selector: 'app-poll-single-page',
@@ -26,7 +27,7 @@ export class PollSinglePageComponent implements OnInit {
       .subscribe(data => {
         this.poll = data;
         // this.poll.options.forEach(o => {
-        //   if (this.isFinalOption(o)) o.checked = true;
+        //   if (this.isFinalOption(o)) o.checked = ;
         // });
       });
   }
@@ -35,12 +36,17 @@ export class PollSinglePageComponent implements OnInit {
     return index;
   }
 
-  @ViewChild('voteLoader') voteLoader;
+  @ViewChild('voteLoader') voteLoader?: LoaderDirective;
   vote() {
     this.pollService
       .vote(this.poll.id, this.poll.options)
       .pipe(reqPipe(this.voteLoader))
-      .subscribe(data => {});
+      .subscribe(
+        data => {},
+        error => {
+          console.log('​PollSinglePageComponent -> vote -> error', error);
+        }
+      );
   }
 
   get isCreator(): boolean {
@@ -53,9 +59,9 @@ export class PollSinglePageComponent implements OnInit {
     return this.poll && this.poll.final_option === option.name;
   }
 
-  selectedPoll: string;
+  selectedPoll: number;
 
-  @ViewChild('finalizeLoader') finalizeLoader;
+  @ViewChild('finalizeLoader') finalizeLoader?: LoaderDirective;
   finalize() {
     this.pollService
       .finalize(this.poll.id, this.selectedPoll)
@@ -65,5 +71,39 @@ export class PollSinglePageComponent implements OnInit {
 
   finalOptionChange(event: MatRadioChange) {
     this.selectedPoll = event.value;
+  }
+
+  chooseOptionYes(option: PollOption) {
+    if (option.checked === YES) {
+      option.yes -= 1;
+      option.checked = NO;
+    } else if (option.checked === NO) {
+      option.yes += 1;
+      option.checked = YES;
+    } else if (option.checked === MAYBE) {
+      option.yes += 1;
+      option.maybe -= 1;
+      option.checked = YES;
+    }
+  }
+  chooseOptionMaybe(option: PollOption) {
+    if (option.checked === MAYBE) {
+      option.maybe -= 1;
+      option.checked = NO;
+    } else if (option.checked === NO) {
+      option.maybe += 1;
+      option.checked = MAYBE;
+    } else if (option.checked === YES) {
+      option.maybe += 1;
+      option.yes -= 1;
+      option.checked = MAYBE;
+    }
+  }
+
+  isOptionMaybe(option: PollOption): boolean {
+    return option.checked === MAYBE;
+  }
+  isOptionYes(option: PollOption): boolean {
+    return option.checked === YES;
   }
 }
