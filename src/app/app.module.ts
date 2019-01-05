@@ -1,7 +1,15 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatRadioModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +35,8 @@ import { PollsListComponent } from './polls-list/polls-list.component';
     BrowserAnimationsModule,
     HttpClientModule,
     LoaderModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
