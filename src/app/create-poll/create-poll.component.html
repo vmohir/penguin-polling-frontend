@@ -10,19 +10,48 @@
     </mat-form-field>
 
     <h4>گزینه‌های نظرسنجی</h4>
+
+    <mat-radio-group formControlName="is_normal">
+      <mat-radio-button [value]="true">گزینه‌های دلخواه (متن)</mat-radio-button>
+      <mat-radio-button class="mr-3" [value]="false">گزینه‌های زمانی (روز هفته و تاریخ شروع و پایان)</mat-radio-button>
+    </mat-radio-group>
+
     <div formArrayName="options">
-      <mat-form-field class="w-100 rtl-text">
-        <mat-chip-list #optionsChipsList>
-          <mat-chip *ngFor="let o of pollOptions.controls, let i = index" [selectable]="true" [removable]="true"
-                    (removed)="removeOption(i)">
-            <span [formGroupName]="i">{{o.value}}</span>
-            <i class="flaticon-005-cancel-1 remove-button mr-2" matChipRemove></i>
-          </mat-chip>
-          <input placeholder="یک گزینه را وارد کنید و Enter را بزنید" [matChipInputFor]="optionsChipsList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-                 (matChipInputTokenEnd)="addOption($event)">
-        </mat-chip-list>
-      </mat-form-field>
+      <ng-container *ngIf="formHasNormalOptions">
+        <mat-form-field class="w-100 rtl-text">
+          <mat-chip-list #optionsChipsList>
+            <mat-chip *ngFor="let o of pollNormalOptions.controls, let i = index" [selectable]="true" [removable]="true"
+                      (removed)="removeNormalOption(i)">
+              <span [formGroupName]="i">{{o.value}}</span>
+              <i class="flaticon-005-cancel-1 remove-button mr-2" matChipRemove></i>
+            </mat-chip>
+            <input placeholder="یک گزینه را وارد کنید و Enter را بزنید" [matChipInputFor]="optionsChipsList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="addNormalOption($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="!formHasNormalOptions">
+        <div *ngFor="let o of pollWeeklyOptions.controls, let i = index" [formGroupName]="i" class="row mt-3 align-items-center">
+          <span class="weekly-span col-auto">هر</span>
+          <div class="col rtl-text" dir="rtl">
+            <mat-select placeholder="روز هفته" formControlName="weekday" name="weekday">
+              <mat-option *ngFor="let w of weekdays" [value]="w.value">
+                {{w.name}}
+              </mat-option>
+            </mat-select>
+          </div>
+          <span class="weekly-span col-auto">از</span>
+          <mat-form-field class="col rtl-text">
+            <input matInput type="text" formControlName="start_time" placeholder="زمان شروع">
+          </mat-form-field>
+          <span class="weekly-span col-auto">تا</span>
+          <mat-form-field class="col rtl-text">
+            <input matInput type="text" formControlName="end_time" placeholder="زمان پایان">
+          </mat-form-field>
+        </div>
+        <button type="button" mat-stroked-button color="accent" (click)="addWeeklyOption()">افزودن گزینه</button>
+      </ng-container>
     </div>
 
     <h4>چه کسانی می‌توانند در این نظرسنجی شرکت کنند؟</h4>
@@ -38,6 +67,13 @@
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
                  (matChipInputTokenEnd)="addParticipant($event)" class="ltr-text">
         </mat-chip-list>
+      </mat-form-field>
+    </div>
+
+    <h4>متن ایمیلی که می‌خواهید به شرکت‌کننده‌ها ارسال شود</h4>
+    <div>
+      <mat-form-field class="w-100 rtl-text">
+        <textarea class="description-input" matInput formControlName="message" placeholder="متن ایمیل" rows="5"></textarea>
       </mat-form-field>
     </div>
 
