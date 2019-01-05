@@ -23,13 +23,13 @@ export class AppComponent {
   private initialiseUsername() {
     if (this.hasUsername) {
       this.username.setValue(this.LS.get('username'));
-      this.onUsernameSubmit();
+      this.onUsernameSubmit(false);
     }
   }
-  onUsernameSubmit() {
+  onUsernameSubmit(redirect: boolean = true) {
     this.LS.set('username', this.username.value);
     this.pollService.setUsername(this.username.value);
-    this.router.navigate(['/']);
+    if (redirect) this.router.navigate(['/']);
   }
 
   onClickCreatePoll() {
