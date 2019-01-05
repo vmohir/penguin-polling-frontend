@@ -15,7 +15,7 @@ export class PollsListComponent implements OnInit {
     this.getPollsList();
   }
 
-  @ViewChild('pollsListLoading') pollsListLoading: LoaderDirective;
+  @ViewChild('pollsListLoading') pollsListLoading?: LoaderDirective;
   getPollsList() {
     this.getCreatedPolls();
     this.getParticipatedPolls();
@@ -33,19 +33,13 @@ export class PollsListComponent implements OnInit {
     this.pollService
       .getCreatedPollsList()
       .pipe(reqPipe(this.pollsListLoading))
-      .subscribe(data => {
-        console.log('​PollsListComponent -> privategetCreatedPolls -> data', data);
-        this.createdPolls = data;
-      });
+      .subscribe(data => (this.createdPolls = data));
   }
 
   trackByFnPolls(index: number, poll: PollDetails) {
     return poll.id;
   }
   get emptyPolls(): boolean {
-    console.log('​PollsListComponent -> constructor -> this.pollsListLoading', this.pollsListLoading);
-    console.log('​PollsListComponent -> constructor -> this.createdPolls', this.createdPolls);
-    console.log('​PollsListComponent -> constructor -> this.createdPolls', this.participatedPolls);
     return (
       !this.pollsListLoading.is &&
       (!this.createdPolls || this.createdPolls.length === 0) &&
