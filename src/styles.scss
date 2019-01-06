@@ -27,4 +27,5 @@ $theme-colors: (
 [class^='flaticon-']:after,
 [class*=' flaticon-']:after {
   font-size: inherit !important;
+  margin-left: 0 !important;
 }

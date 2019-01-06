@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   LS = new LocalStorageService('app');
   username = new FormControl(null, [Validators.required]);
-  notifOptions = { timeOut: 3000 };
+  notifOptions = { timeOut: 8000 };
 
   get hasUsername(): boolean {
     const username = this.LS.get('username');
