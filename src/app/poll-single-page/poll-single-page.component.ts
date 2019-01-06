@@ -17,10 +17,10 @@ export class PollSinglePageComponent implements OnInit {
   pollId: string;
   poll: PollDetails;
   editPollForm = this.formBuilder.group({
-    message: []
+    message: ['']
   });
   isEditingPoll: boolean = false;
-  commentForm = this.formBuilder.group({ message: [, [Validators.required]], parent_id: [0, [Validators.required]] });
+  commentForm = this.formBuilder.group({ message: ['', [Validators.required]], parent_id: [0, [Validators.required]] });
   constructor(
     private route: ActivatedRoute,
     private pollService: PollsService,

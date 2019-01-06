@@ -36,7 +36,7 @@ export class CreatePollComponent implements OnInit {
       options: this.pollNormalOptions,
       participants: this.pollParticipants,
       is_normal: [true],
-      message: []
+      message: ['']
     });
     this.addWeeklyOption();
     this.pollForm.get('is_normal').valueChanges.subscribe(data => {
