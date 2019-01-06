@@ -88,6 +88,7 @@ export class PollSinglePageComponent implements OnInit {
       .subscribe(data => {
         this.getPoll();
         this.notif.success('انجام شد');
+        this.isEditingPoll = false;
       });
   }
 
@@ -148,6 +149,7 @@ export class PollSinglePageComponent implements OnInit {
       .pipe(reqPipe(this.editLoader))
       .subscribe(data => {
         this.getPoll();
+        this.isEditingPoll = false;
       });
   }
 

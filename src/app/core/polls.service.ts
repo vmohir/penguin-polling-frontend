@@ -43,6 +43,7 @@ export class PollsService {
   }
 
   submitPoll(submitForm: CreateNormalPollForm): Observable<any> {
+    submitForm.message = submitForm.message || '';
     return this.submitPollReq(submitForm);
   }
   private submitPollReq(submitForm: CreateNormalPollForm): Observable<any> {
