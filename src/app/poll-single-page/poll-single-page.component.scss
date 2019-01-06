@@ -17,9 +17,12 @@
   > .poll-option-vote-content {
     @extend .box-item;
   }
-  > label {
+  > mat-radio-button {
     @extend .box-item;
     width: 100%;
+    .mat-radio-label {
+      width: 100%;
+    }
     .mat-radio-label-content {
       width: 100%;
     }
@@ -38,9 +41,17 @@
     margin: 0 5px;
     cursor: pointer;
     border-radius: 4px;
+    background: #f4f4f4;
+    box-shadow: 0 1px 3px -1px;
+    > i {
+      font-size: 10px;
+      vertical-align: -1px;
+      width: 12px;
+      display: none;
+    }
 
     &:hover {
-      background: #f4f4f4;
+      background: #f9f9f9;
     }
     &.option-yes {
       color: #00a008;
@@ -49,8 +60,16 @@
       color: #b88d00;
     }
     &.active-option {
-      background: #f4f4f4;
-      box-shadow: 0 1px 3px -1px;
+      background: #eeeeee;
+      box-shadow: inset 0 1px 3px -1px;
+      > i {
+        display: inline-block;
+      }
+    }
+
+    &.poll-option-creator {
+      background: transparent;
+      box-shadow: none;
     }
   }
   &.is-finalized {
@@ -60,6 +79,8 @@
       margin: 0 5px;
       cursor: default;
       border-radius: 4px;
+      background: transparent;
+      box-shadow: none;
 
       &:hover {
         background: transparent;
@@ -89,4 +110,45 @@
   border-radius: 4px;
   padding: 2px 8px;
   margin-right: 8px;
+}
+
+.view-comments-button {
+  cursor: pointer;
+  margin-left: 12px;
+  color: #666666;
+}
+
+.comment-body {
+  background: #f6f6f6;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #dddddd;
+  margin: 5px 0;
+
+  .comment-user {
+    font-weight: bold;
+    float: right;
+    display: block;
+  }
+  .comment-message {
+    display: block;
+    margin: 10px 0;
+  }
+  .comment-date {
+    display: block;
+    text-align: left;
+  }
+}
+
+.cancel-reply {
+  background: #eeeeee;
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.edit-poll-wrapper {
+  max-width: 710px;
+  margin: 0 auto;
 }

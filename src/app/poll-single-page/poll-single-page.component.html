@@ -8,38 +8,86 @@
       <div class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [class.is-finalized]="final_option">
         <div class="poll-option-vote-content row no-gutters">
           <span class="col">{{o.value}}</span>
-          <span class="col-auto" (click)="viewComments(o)">مشاهده نظرات</span>
+          <span class="col-auto view-comments-button" (click)="toggleComments(o)">نظرات</span>
           <span class="col-auto option-count option-yes" [class.active-option]="isOptionYes(o)" (click)="chooseOptionYes(o)">
-            {{o.yes}} بله</span>
+            <i class="flaticon-checked"></i> {{o.yes}} بله</span>
           <span class="col-auto option-count option-maybe" [class.active-option]="isOptionMaybe(o)" (click)="chooseOptionMaybe(o)">
-            {{o.maybe}} ناچارا</span>
+            <i class="flaticon-checked"></i> {{o.maybe}} ناچارا</span>
           <span *ngIf="isFinalOption(o)" class="final-option">رای نهایی</span>
         </div>
-        <div class="poll-option-comments" *ngIf="o.comments && o.comments.length > 0">
-          <div *ngFor="let c of o.comments">
-            <span>{{c.user}}</span>
-            <span>{{c.date}}</span>
-            <span>{{c.message}}</span>
-          </div>
-        </div>
+        <ng-container *ngTemplateOutlet="commentsTpl; context: {option:o}"></ng-container>
       </div>
     </div>
     <div *ngIf="isCreator">
-      <mat-radio-group (change)="finalOptionChange($event)">
-        <mat-radio-button class="poll-option" *ngFor="let o of poll.options; trackBy:trackByFnOptions" [value]="o.id">
-          <div class="row no-gutters">
-            <span class="col">{{o.value}}</span>
-            <span class="col-auto option-count">{{o.yes}} بله</span>
-            <span class="col-auto option-count">{{o.maybe}} ناچارا</span>
+      <mat-radio-group [(ngModel)]="selectedPoll">
+        <div *ngFor="let o of poll.options; trackBy:trackByFnOptions" class="poll-option">
+          <mat-radio-button [value]="o.id" [disabled]="final_option">
+            <div class="row no-gutters">
+              <span class="col">{{o.value}}</span>
+              <span class="col-auto view-comments-button mr-5" (click)="toggleComments(o)">نظرات</span>
+              <span class="col-auto option-count poll-option-creator option-yes">{{o.yes}} بله</span>
+              <span class="col-auto option-count poll-option-creator option-maybe">{{o.maybe}} ناچارا</span>
+            </div>
+          </mat-radio-button>
+          <div class="poll-option-comments box-item mb-4" *ngIf="o.comments">
+            <ng-container *ngFor="let c of getOptionComments(o)">
+              <ng-container *ngTemplateOutlet="commentTpl; context: {option:o, comment:c}"></ng-container>
+            </ng-container>
           </div>
-        </mat-radio-button>
+        </div>
+
       </mat-radio-group>
     </div>
     <div class="submit-container">
       <button #voteLoader="loader" loader="button" *ngIf="!isCreator && !final_option" mat-raised-button color="accent"
               type="button" (click)="vote()">ثبت رای</button>
-      <button #finalizeLoader="loader" loader="button" *ngIf="isCreator" mat-raised-button color="accent" type="button"
-              (click)="finalize()">نهایی کردن</button>
+      <button #finalizeLoader="loader" loader="button" *ngIf="isCreator && !final_option" mat-raised-button color="accent"
+              type="button" (click)="finalize()">نهایی کردن</button>
+    </div>
+    <div *ngIf="isCreator && final_option" class="edit-poll-wrapper box-item">
+      <button [hidden]="isEditingPoll" (click)="enableEdit()" mat-stroked-button color="accent">ویرایش نظرسنجی</button>
+      <div *ngIf="isCreator && isEditingPoll">
+        <p>با زدن گزینه‌ی ثبت، شرکت‌کنندگان می‌توانند دوباره رای دهند.</p>
+        <form [formGroup]="editPollForm" (submit)="submitEditPoll()">
+          <mat-form-field class="w-100 rtl-text">
+            <textarea class="description-input" matInput formControlName="message" placeholder="متن ایمیل" rows="5"></textarea>
+          </mat-form-field>
+          <button mat-flat-button color="accent" type="submit" #editLoader="loader" loader="button">ثبت</button>
+        </form>
+      </div>
     </div>
   </ng-container>
 </div>
+
+
+<ng-template #commentTpl let-o="option" let-c="comment">
+  <div class="comment-body">
+    <span class="comment-user">{{c.user}}</span>
+    <span class="comment-date">{{c.date}}</span>
+    <span class="comment-message">{{c.message}}</span>
+    <div class="text-left">
+      <button mat-button color="accent" (click)="replyComment(o, c)">پاسخ به این کامنت</button>
+    </div>
+    <ng-container *ngFor="let c of getOptionComments(o, c)">
+      <ng-container *ngTemplateOutlet="commentTpl; context: {option:o, comment:c}"></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #commentsTpl let-o="option">
+  <div class="poll-option-comments box-item mb-4" *ngIf="o.comments">
+    <ng-container *ngFor="let c of getOptionComments(o)">
+      <ng-container *ngTemplateOutlet="commentTpl; context: {option:o, comment:c}"></ng-container>
+    </ng-container>
+
+    <div class="mt-4">
+      <form [formGroup]="commentForm" (submit)="submitComment(o)">
+        <span *ngIf="isReplyingTo">در حال پاسخ به نظر {{isReplyingTo.user}} <span class="cancel-reply" (click)="cancelReply(o)">لغو</span></span>
+        <mat-form-field class="w-100 rtl-text">
+          <textarea class="description-input" matInput formControlName="message" placeholder="متن پیام" rows="5"></textarea>
+        </mat-form-field>
+        <button mat-flat-button color="accent" type="submit">ارسال پیام</button>
+      </form>
+    </div>
+  </div>
+</ng-template>

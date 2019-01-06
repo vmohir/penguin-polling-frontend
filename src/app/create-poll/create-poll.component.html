@@ -23,7 +23,7 @@
             <mat-chip *ngFor="let o of pollNormalOptions.controls, let i = index" [selectable]="true" [removable]="true"
                       (removed)="removeNormalOption(i)">
               <span [formGroupName]="i">{{o.value}}</span>
-              <i class="flaticon-005-cancel-1 remove-button mr-2" matChipRemove></i>
+              <i class="flaticon-cancel remove-button mr-2" matChipRemove></i>
             </mat-chip>
             <input placeholder="یک گزینه را وارد کنید و Enter را بزنید" [matChipInputFor]="optionsChipsList"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
@@ -71,6 +71,7 @@
     </div>
 
     <h4>متن ایمیلی که می‌خواهید به شرکت‌کننده‌ها ارسال شود</h4>
+    <p>اگر هیچ متنی وارد نکنید، یک متن پیش فرض ارسال می‌شود.</p>
     <div>
       <mat-form-field class="w-100 rtl-text">
         <textarea class="description-input" matInput formControlName="message" placeholder="متن ایمیل" rows="5"></textarea>

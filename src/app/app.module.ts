@@ -19,6 +19,7 @@ import { LoaderModule } from './directives/loader/loader.module';
 import { PollItemComponent } from './poll-item/poll-item.component';
 import { PollSinglePageComponent } from './poll-single-page/poll-single-page.component';
 import { PollsListComponent } from './polls-list/polls-list.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [AppComponent, PollsListComponent, PollItemComponent, PollSinglePageComponent, CreatePollComponent],
@@ -36,7 +37,8 @@ import { PollsListComponent } from './polls-list/polls-list.component';
     HttpClientModule,
     LoaderModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

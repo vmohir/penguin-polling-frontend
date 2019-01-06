@@ -9,7 +9,13 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PollsService {
-  getOptionComments(pollId: string, commentId: string): Observable<OptionComment[]> {
+  commentOption(pollId: string, optionId: number, value: any): Observable<void> {
+    return this.http.post<any>(`${API_BASE}/comment/${pollId}/${optionId}`, { ...value, username: this.username });
+  }
+  editPoll(pollId: string, value: EditPollForm): Observable<any> {
+    return this.http.put(`${API_BASE}/edit/${pollId}`, { ...value, username: this.username });
+  }
+  getOptionComments(pollId: string, commentId: number): Observable<OptionComment[]> {
     return this.http.get<OptionComment[]>(`${API_BASE}/comments/${pollId}/${commentId}`, { params: { username: this.username } });
   }
   private username?: string;
@@ -56,12 +62,18 @@ export class PollsService {
     );
   }
   private convertOptionResToPollOption(options: PollDetailsRes['options']): PollOption[] {
-    return Object.keys(options).map(x => ({ id: x, value: options[x].value, yes: options[x].yes, maybe: options[x].maybe, checked: 1 }));
+    return Object.keys(options).map(x => ({
+      id: parseInt(x),
+      value: options[x].value,
+      yes: options[x].yes,
+      maybe: options[x].maybe,
+      checked: 1
+    }));
   }
 
   private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
-    return of<PollDetailsRes>(optionsTest[0]);
-    // return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
+    // return of<PollDetailsRes>(optionsTest[0]);
+    return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
   }
 
   getParticipatedPolls(): Observable<PollDetails[]> {
@@ -113,7 +125,7 @@ export interface PollDetails {
 export interface PollOption {
   comments?: OptionComment[];
   checked?: number;
-  id: string;
+  id: number;
   value: string;
   yes: number;
   maybe: number;
@@ -151,6 +163,10 @@ export interface OptionComment {
   user: string;
   option_id: string;
   parent: string | undefined;
+}
+
+export interface EditPollForm {
+  message: string;
 }
 
 export function reqPipe<T>(
@@ -244,7 +260,7 @@ const optionsTest: PollDetailsRes[] = [
   }
 ];
 
-export const API_BASE = 'http://192.168.43.9:8100/api/v1/polling';
+export const API_BASE = 'http://192.168.43.191:8100/api/v1/polling';
 
 export const YES = 0;
 export const NO = 1;

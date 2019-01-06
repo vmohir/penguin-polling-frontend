@@ -21,3 +21,10 @@ $theme-colors: (
 @import 'scss/materials.scss';
 @import 'scss/loader.scss';
 @import 'scss/dialogs.scss';
+
+[class^='flaticon-']:before,
+[class*=' flaticon-']:before,
+[class^='flaticon-']:after,
+[class*=' flaticon-']:after {
+  font-size: inherit !important;
+}
