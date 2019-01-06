@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoaderDirective } from '@app/directives/loader/loader.directive';
-import { MonoTypeOperatorFunction, Observable, throwError, of } from 'rxjs';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
+import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -32,7 +31,6 @@ export class PollsService {
     return this.finalizeReq(pollId, option);
   }
   private finalizeReq(pollId: string, option: number): Observable<any> {
-    // return of();
     return this.http.post(`${API_BASE}/finalize/${pollId}`, { option, username: this.username });
   }
 
@@ -41,7 +39,6 @@ export class PollsService {
     return this.voteReq(pollId, optionsReq);
   }
   private voteReq(pollId: string, options: { [key: string]: number }): Observable<any> {
-    // return of();
     return this.http.post(`${API_BASE}/vote/${pollId}`, { username: this.username, options });
   }
 
@@ -49,7 +46,6 @@ export class PollsService {
     return this.submitPollReq(submitForm);
   }
   private submitPollReq(submitForm: CreateNormalPollForm): Observable<any> {
-    // return of<any[]>([]);
     return this.http.post(`${API_BASE}/create`, { ...submitForm, username: this.username });
   }
 
@@ -63,7 +59,7 @@ export class PollsService {
   }
   private convertOptionResToPollOption(options: PollDetailsRes['options']): PollOption[] {
     return Object.keys(options).map(x => ({
-      id: parseInt(x),
+      id: parseInt(x, 10),
       value: options[x].value,
       yes: options[x].yes,
       maybe: options[x].maybe,
@@ -72,7 +68,6 @@ export class PollsService {
   }
 
   private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
-    // return of<PollDetailsRes>(optionsTest[0]);
     return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
   }
 
@@ -84,7 +79,6 @@ export class PollsService {
     );
   }
   private getParticipatedPollsReq(): Observable<PollDetailsRes[]> {
-    // return of<PollDetailsRes[]>(optionsTest);
     return this.http.get<PollDetailsRes[]>(`${API_BASE}/participated`, { params: { username: this.username } });
   }
 
