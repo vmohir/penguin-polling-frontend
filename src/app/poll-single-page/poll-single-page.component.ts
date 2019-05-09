@@ -184,4 +184,8 @@ export class PollSinglePageComponent implements OnInit {
     if (comment) return option.comments.filter(c => c.parent === comment.id);
     return option.comments.filter(c => c.parent == undefined);
   }
+
+  getNo(option: PollOption): number {
+    return 6 - option.yes - option.maybe;
+  }
 }

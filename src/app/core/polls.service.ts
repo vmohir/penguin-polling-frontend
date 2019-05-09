@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoaderDirective } from '@app/directives/loader/loader.directive';
-import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, throwError, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -69,7 +69,21 @@ export class PollsService {
   }
 
   private getPollDetailsReq(pollId: string): Observable<PollDetailsRes> {
-    return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
+    return of<PollDetailsRes>({
+      id: 'e',
+      username: 'prof',
+      title: 'تعیین زمان جلسه',
+      description: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.',
+      status: 0,
+      options: {
+        '1': { value: 'یک‌شنبه ۱۲:۰۰ تا ۱۴:۰۰', yes: 2, maybe: 4 },
+        '2': { value: 'دو‌شنبه ۱۲:۰۰ تا ۱۴:۰۰', yes: 3, maybe: 1 },
+        '3': { value: 'سه‌شنبه ۱۲:۰۰ تا ۱۴:۰۰', yes: 1, maybe: 0 }
+      },
+      creator: 'profressor',
+      is_normal: true
+    });
+    // return this.http.get<PollDetailsRes>(`${API_BASE}/${pollId}`, { params: { username: this.username } });
   }
 
   getParticipatedPolls(): Observable<PollDetails[]> {

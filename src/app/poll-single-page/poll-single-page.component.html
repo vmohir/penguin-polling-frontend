@@ -13,6 +13,8 @@
             <i class="flaticon-checked"></i> {{o.yes}} بله</span>
           <span class="col-auto option-count option-maybe" [class.active-option]="isOptionMaybe(o)" (click)="chooseOptionMaybe(o)">
             <i class="flaticon-checked"></i> {{o.maybe}} ناچارا</span>
+          <span class="col-auto option-count option-no" [class.active-option]="isOptionMaybe(o)" (click)="chooseOptionMaybe(o)">
+            <i class="flaticon-checked"></i> {{getNo(o)}} خیر</span>
           <span *ngIf="isFinalOption(o)" class="final-option">رای نهایی</span>
         </div>
         <ng-container *ngTemplateOutlet="commentsTpl; context: {option:o}"></ng-container>
@@ -39,10 +41,10 @@
       </mat-radio-group>
     </div>
     <div class="submit-container">
-      <button #voteLoader="loader" loader="button" *ngIf="!isCreator && !final_option" mat-raised-button color="accent"
-              type="button" (click)="vote()">ثبت رای</button>
-      <button #finalizeLoader="loader" loader="button" *ngIf="isCreator && !final_option" mat-raised-button color="accent"
-              type="button" (click)="finalize()">نهایی کردن</button>
+      <button #voteLoader="loader" loader="button" *ngIf="!isCreator && !final_option" mat-raised-button color="accent" type="button"
+              (click)="vote()">ثبت رای</button>
+      <button #finalizeLoader="loader" loader="button" *ngIf="isCreator && !final_option" mat-raised-button color="accent" type="button"
+              (click)="finalize()">نهایی کردن</button>
     </div>
     <div *ngIf="isCreator && final_option" class="edit-poll-wrapper box-item">
       <button [hidden]="isEditingPoll" (click)="enableEdit()" mat-stroked-button color="accent">ویرایش نظرسنجی</button>
@@ -82,7 +84,8 @@
 
     <div class="mt-4">
       <form [formGroup]="commentForm" (submit)="submitComment(o)">
-        <span *ngIf="isReplyingTo">در حال پاسخ به نظر {{isReplyingTo.user}} <span class="cancel-reply" (click)="cancelReply(o)">لغو</span></span>
+        <span *ngIf="isReplyingTo">در حال پاسخ به نظر {{isReplyingTo.user}} <span class="cancel-reply"
+                (click)="cancelReply(o)">لغو</span></span>
         <mat-form-field class="w-100 rtl-text">
           <textarea class="description-input" matInput formControlName="message" placeholder="متن پیام" rows="5"></textarea>
         </mat-form-field>
