@@ -12,22 +12,7 @@ jobs:
     name: Check Affected Libraries
     runs-on: ubuntu-latest
     outputs:
-      utils_changes: ${{ steps.check_changes.outputs.utils_changes }}
-      ui_changes: ${{ steps.check_changes.outputs.ui_changes }}
-      chart_changes: ${{ steps.check_changes.outputs.chart_changes }}
-      auth_changes: ${{ steps.check_changes.outputs.auth_changes }}
-      questionnaire_changes:
-        ${{ steps.check_changes.outputs.questionnaire_changes }}
-      modules_changes: ${{ steps.check_changes.outputs.modules_changes }}
-      call_kit_changes: ${{ steps.check_changes.outputs.call_kit_changes }}
-      authorization_changes:
-        ${{ steps.check_changes.outputs.authorization_changes }}
-      export_changes: ${{ steps.check_changes.outputs.export_changes }}
-      profile_changes: ${{ steps.check_changes.outputs.profile_changes }}
-      integrations_changes:
-        ${{ steps.check_changes.outputs.integrations_changes }}
-      core_changes: ${{ steps.check_changes.outputs.core_changes }}
-      admin_changes: ${{ steps.check_changes.outputs.admin_changes }}
+      changed_projects: ${{ steps.check_changes.outputs.changed_projects }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -36,20 +21,18 @@ jobs:
       - name: Check the changes
         id: check_changes
         run: |
-          cat angular.json | jq -r '.projects[] | select (.architect.test) | .root'
-        # echo "::set-output name=utils_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-utils')";
-        # echo "::set-output name=ui_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-ui')";
-        # echo "::set-output name=chart_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-chart')";
-        # echo "::set-output name=auth_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-authentication/')";
-        # echo "::set-output name=questionnaire_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-questionnaire')";
-        # echo "::set-output name=modules_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-modules')";
-        # echo "::set-output name=call_kit_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-call-kit')";
-        # echo "::set-output name=authorization_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-authorization')";
-        # echo "::set-output name=profile_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-profile')";
-        # echo "::set-output name=integrations_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-integrations')";
-        # echo "::set-output name=core_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-core')";
-        # echo "::set-output name=admin_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-admin')";
+          PROEJCTS=cat angular.json | jq -r '.projects[] | .root'
+          CHANGED_PROJECTS=echo "[]" | jq
+          
+          for p in $PROEJCTS; do
+            echo "Checking changes for $p"
+            if git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep "$p"; then
+              CHANGED_PROJECTS=$(echo $CHANGED_PROJECTS | jq ". + [\"$p\"]")
+            fi
+          done
 
+          echo "changed_projects=$CHANGED_PROJECTS" >> $GITHUB_OUTPUT
+      
   # HumaUtils library tests
   # test-huma-utils:
   #   name: "Unit Tests: Utils Library"
