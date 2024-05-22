@@ -36,7 +36,7 @@ jobs:
       - name: Check the changes
         id: check_changes
         run: |
-          cat angular.json | jq -r .projects | jq 'keys'
+          cat angular.json | jq -r '.projects[] | select (.architect.test) | .root'
         # echo "::set-output name=utils_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-utils')";
         # echo "::set-output name=ui_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-ui')";
         # echo "::set-output name=chart_changes::$(git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep 'projects/huma-chart')";
