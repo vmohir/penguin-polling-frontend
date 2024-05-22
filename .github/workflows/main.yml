@@ -21,16 +21,25 @@ jobs:
       - name: Check the changes
         id: check_changes
         run: |
-          PROEJCTS=cat angular.json | jq -r '.projects[] | .root'
-          CHANGED_PROJECTS=echo "[]" | jq
+          # get the projects "root" key from the angular.json file
+          PROJECTS_STR=$(cat angular.json | jq -r '.projects[] | select (.architect.test) | .root')
           
-          for p in $PROEJCTS; do
+          # split the string with '\n' as delimiter to create an array
+          array=($PROJECTS_STR)
+          
+          for element in "${array[@]}"; do
+          echo "wef $element"
+          done
+          
+          CHANGED_PROJECTS=()
+          
+          for p in $array; do
             echo "Checking changes for $p"
             if git diff --diff-filter=MA --name-only origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | grep "$p"; then
-              CHANGED_PROJECTS=$(echo $CHANGED_PROJECTS | jq ". + [\"$p\"]")
+            CHANGED_PROJECTS+=("$p")
             fi
           done
-
+          
           echo "changed_projects=$CHANGED_PROJECTS" >> $GITHUB_OUTPUT
       
   # HumaUtils library tests
